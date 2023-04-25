@@ -1,0 +1,30 @@
+syntax="proto3";
+
+service HelpQuestionService {
+   rpc getHelpQuestions(HelpQuestionsRequest) returns (HelpQuestionsResponse) {};
+}
+
+message HelpQuestionsRequest {
+   string platformPartner = 1;
+   string client = 2;
+   string query = 3;
+   string page = 4;
+   string perPage = 5;
+   string category = 6;
+   string language = 7;
+}
+
+message HelpQuestionsResponse {
+   map<string, HelpQuestionList> helpQuestions = 1;
+   int32 count = 2;
+   int32 pages = 3;
+}
+
+message HelpQuestionList {
+   repeated HelpQuestion questions = 1;
+}
+
+message HelpQuestion {
+   string question = 1;
+   string answer = 2;
+}

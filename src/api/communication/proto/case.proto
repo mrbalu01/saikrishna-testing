@@ -1,0 +1,547 @@
+syntax = "proto3";
+
+service CaseService {
+    rpc getCustomerCases(CasesRequest) returns (CaseList) {}
+    rpc getCaseReportGroupByCaseNumber(CasesRequest) returns (CaseReportResponseList) {}
+    rpc getCustomerCaseById(CaseRequest) returns (DetailCase) {}
+    rpc getCustomerCaseByCaseNumber(CaseNumberRequest) returns (Case) {}
+    rpc getCustomerAndCaseDetailsByCaseId(CaseRequest) returns (CustomerAndCaseDetails) {}
+    rpc updateCustomerCaseById(UpdateCaseRequest) returns (Case) {}
+    rpc getCaseDevices(getCaseDeviceRequest) returns (getCaseDeviceResponce) {}
+    rpc getCaseReports(CaseReportRequest) returns (CaseReportResponse) {}
+    rpc getCustomerCasesByStage(CasesStageRequest) returns (CaseList) {}
+    rpc getCustomerCasesForCreateAppointment(CasesStageRequest) returns (CaseList) {}
+    rpc markCaseAsCompleted(CaseRequest) returns (DetailCase) {}
+    rpc markCaseAsClosed(CaseRequest) returns (DetailCase) {}
+    rpc updateCaseCustomerName(Case) returns (Empty) {}
+    rpc getLastProcessedDataTimestamp(CaseRequest) returns (LastProcessedDataTimestampResponse) {}
+    rpc generateCustomECG(CustomerECGRequest) returns (Empty) {}
+    rpc updateCareTakerByCaseId(UpdateCaseRequest) returns (Case) {}
+    rpc getCustomerCasesByCustomerId(CustomerCaseRequest) returns (CaseList) {}
+    rpc createCase(CreateCaseRequest) returns (DetailCase) {}
+    rpc triggerIntermittentReport(IntermittentECGRequest) returns (Empty) {}
+    rpc isActiveCasePresentForMobile(Mobile) returns (isActiveResponse) {}
+    rpc getActiveCaseCount(ActiveCaseCountRequest) returns (ActiveCaseCountResponse) {}
+    rpc getUsageReportDetails(UsageReportRequest) returns (UsageReportResponse) {}
+}
+
+message ActiveCaseCountRequest {
+    string doctor = 1;
+    string business = 2;
+}
+
+message ActiveCaseCountResponse {
+    int32 count = 1;
+}
+
+message isActiveResponse {
+    bool isActive = 1;
+}
+
+message IntermittentECGRequest {
+    string inferVitalId = 1;
+    string analysisEngine = 2; 
+    bool useDenoiseData = 3;
+    bool saveRecording = 4;
+}
+
+message CustomerECGRequest {
+    string id = 1;
+    string start = 2;
+    string end = 3;
+    string patchId = 4;
+    string caseNumber = 5;
+    string deviceName = 6;
+    string analysisEngine = 7;
+    bool useDenoiseData = 8;
+    bool saveRecording = 9;
+}
+
+message LastProcessedDataTimestampResponse {
+    string timeStamp = 1;
+}
+
+message CaseReportRequest {
+    string caseNumber = 1;
+}
+
+message CaseReportResponse {
+    repeated CaseReport caseReports = 1;
+}
+
+message CaseReport {
+    string caseNumber = 1;
+    ReportType reportType = 2;
+    string reportUrl = 3;
+    string reportId = 4;
+    Evaluated evaluated = 5;
+}
+
+message ReportType {
+    string rtype = 1;
+    int32 day = 2;
+}
+
+message Evaluated {
+    double to = 1;
+    double from = 2;
+}
+
+message CustomerAndCaseDetails {
+    Case case = 1;
+    customer customer = 2;
+}
+
+message Case {
+    string caseNumber = 1;
+    Condition condition = 2;
+    repeated Vital vitals = 3;
+    TotalDuration totalDuration = 4;
+    string liveStreamingStartTime = 5;
+    string recordingStartTime = 6;
+    string onboardingTime = 7;
+    string offboardingTime = 8;
+    string platformPartner = 9;
+    string stage = 10;
+    string status = 11;
+    repeated History history = 12;
+    Customer customer = 13;
+    MedicalRecords medicalRecords = 14;
+    Analysis analysis = 15;
+    bool isActive = 16;
+    ValidatedDevice validatedDevice = 17;
+    bool hasMonitoringPeriodElapsed = 18;
+    Feedback feedback = 19;
+    string id = 20;
+    string createdAt = 21;
+    string updatedAt = 22;
+    repeated AssessmentRecord assessmentRecords = 23;
+    Business business = 24;
+    Doctor doctor = 25;
+    string anyDesk = 26;
+    bool assessmentAnswered = 27;
+    repeated CareTaker careTaker = 28;
+    LayoutOccupancy layoutOccupancy = 29;
+    string uhid = 30;
+    string diagnosis = 31;
+    string ecgEventsLastViewedAt = 32;
+    CreatedBy createdBy = 33;
+    SymptomChecker symptomChecker = 34;
+    string bedno = 35;
+    MobileDeviceInfo mobileDeviceInfo = 36;
+    repeated MobileDeviceInfo mobileDeviceInfoHistory = 37;
+    string timeZone = 38;
+    Business serviceEnabler = 39;
+}
+
+message DetailCase {
+    string caseNumber = 1;
+    Condition condition = 2;
+    repeated Vital vitals = 3;
+    TotalDuration totalDuration = 4;
+    string liveStreamingStartTime = 5;
+    string recordingStartTime = 6;
+    string onboardingTime = 7;
+    string offboardingTime = 8;
+    string platformPartner = 9;
+    string stage = 10;
+    string status = 11;
+    repeated History history = 12;
+    DetailCustomer customer = 13;
+    MedicalRecords medicalRecords = 14;
+    Analysis analysis = 15;
+    bool isActive = 16;
+    ValidatedDevice validatedDevice = 17;
+    bool hasMonitoringPeriodElapsed = 18;
+    Feedback feedback = 19;
+    string id = 20;
+    string createdAt = 21;
+    string updatedAt = 22;
+    repeated AssessmentRecord assessmentRecords = 23;
+    Business business = 24;
+    Doctor doctor = 25;
+    string anyDesk = 26;
+    bool assessmentAnswered = 27;
+    repeated CareTaker careTaker = 28;
+    SymptomChecker symptomChecker = 29;
+    string bedno = 30;
+    LayoutOccupancy layoutOccupancy = 31;
+    string uhid = 32;
+    string diagnosis = 33;
+    string ecgEventsLastViewedAt = 34;
+    CreatedBy createdBy = 35;
+    MobileDeviceInfo mobileDeviceInfo = 36;
+    repeated MobileDeviceInfo mobileDeviceInfoHistory = 37;
+    string timeZone = 38;
+    Business serviceEnabler = 39;
+}
+
+message LayoutOccupancy {
+   string businessId = 1;
+   repeated Layout layout = 2;
+}
+
+message Layout {
+   string id = 1;
+   string layoutName = 2;
+   string layoutValue = 3;
+}
+
+message Business {
+   string id = 1;
+   string name = 2;
+}
+
+message Doctor {
+   string id = 1;
+   string firstName = 2;
+   string lastName = 3;
+}
+
+message History {
+    string stage = 1;
+    string status = 2;
+    repeated StatusHistory statusHistory = 3;
+    string createdAt = 4;
+}
+
+message StatusHistory {
+    string status = 1;
+    string createdAt = 2;
+}
+
+message Condition {
+    string id = 1;
+    string name = 2;
+    ConditionDuration duration = 3;
+    Metadata metadata = 4;
+}
+
+message ConditionDuration {
+    bool isFixed = 1;
+    int32 value = 2;
+    string durationUnits = 3;
+}
+
+message MedicalRecords {
+    Height height = 1;
+    int32 weight = 2 ;
+    repeated HealthRecord healthRecords = 3;
+}
+
+message Height {
+    int32 feet = 1;
+    int32 inches = 2;
+}
+
+message HealthRecord {
+    string id = 1;
+    string text = 2;
+    repeated string answer = 3;
+}
+
+message AssessmentRecord {
+    string text = 1;
+    string answer = 2;
+    string start = 3;
+    string end = 4;
+    string selectedDate = 5;
+}
+
+message ValidatedDevice {
+
+}
+
+message Feedback {
+    int32 rating = 1;
+    string comment = 2;
+    repeated string options = 3;
+}
+
+message Customer {
+   string id = 1;
+   string firstName = 2;
+   string lastName = 3;
+}
+
+message DetailCustomer {
+   customer id = 1;
+   string firstName = 2;
+   string lastName = 3;
+   string patientId = 4;
+}
+
+message customer {
+   string id = 1;
+   Mobile mobile = 2;
+   string email = 3;
+   string firstName = 4;
+   string lastName = 5;
+   string gender = 6;
+   string dob = 7;
+   string createdAt = 8;
+   string updatedAt = 9;
+   string referralCode = 12;
+   string role = 14;
+   string age = 15;
+   string name = 16;
+   string patientId = 17;
+   string height = 18;
+   string weight = 19;
+}
+
+message Mobile {
+   string number = 1;
+   string countryCode = 2;
+}
+
+message Vital {
+    string id = 1;
+    string name = 2;
+    MonitoringFrequency monitoringFrequency = 3;
+    bool isMonitored = 4;
+    string code = 5;
+}
+
+
+message TotalDuration {
+    int32 duration = 1;
+    string durationUnits = 2;
+}
+
+message MonitoringFrequency {
+    string duration = 1;
+    string durationUnits = 2 ;
+    string periodicity = 3;
+    string periodicityUnits = 4;
+}
+
+message Analysis {
+    StatusAnalysis onDemand = 1;
+    StatusAnalysis periodic = 2;
+    StatusAnalysis total = 3;
+}
+
+message StatusAnalysis {
+    int32 completed = 1;
+    int32 total = 2;
+    string next = 3;
+}
+
+message CasesRequest {
+    string page = 1;
+    string perPage = 2;
+    string search = 3;
+    string platformPartner = 4;
+    string business = 5;
+    string doctor = 6;
+    string customer = 7;
+    string condition = 8;
+    string stage = 9;
+    string isFixedDuration = 10;
+    string serviceEnablerId = 11;
+    string businessPartnerId = 12;
+}
+
+message CaseRequest {
+    string id = 1;
+}
+
+message CaseNumberRequest {
+    string caseNumber = 1;
+}
+
+message getCaseDeviceRequest {
+    string id = 1;
+}
+
+message getCaseDeviceResponce {
+    repeated CaseDevice caseDevices =1;
+}
+
+message CaseDevice {
+    string customerCase = 1;
+    string device = 2;
+    string name = 3;
+    string type = 4;
+    string status = 5;
+    string stage = 6;
+    string priority = 7;
+    string shouldConnect = 8;
+    Instance instance = 9;
+    Config config = 10;
+    string lastConnected = 11;
+    string id= 12;
+    string liveStreamingStartTime = 13;
+    string onboardingTime = 14;
+    string recordingStartTime = 15;
+    repeated History history = 16;
+}
+
+message Instance {
+   string id = 1;
+   string patchId = 2;
+}
+
+message Config {
+   int32 retrievalFrequencyInMinutes = 1;
+   int32 retrievalDurationInMinutes = 2;
+}
+
+message UpdatedObj {
+    repeated HealthRecord healthRecords = 1;
+    repeated AssessmentRecord assessmentRecords = 2;
+    string anyDesk = 3;
+    bool assessmentAnswered = 4;
+    repeated CareTaker careTaker = 5;
+    string ecgEventsLastViewedAt = 6;
+}
+
+message UpdateCaseRequest {
+    string id = 1;
+    UpdatedObj updatedObj = 2;
+}
+
+
+message CaseList {
+    repeated DetailCase patientCases = 1;
+    int32 count = 2;
+    int32 pages = 3;
+}
+
+message CaseReportResponseList {
+    repeated EcgReportByCaseNumbers reports = 1;
+    int32 count = 2;
+    int32 pages = 3;
+    string message = 4;
+}
+
+message EcgReportByCaseNumbers {
+    string caseNumber = 1;
+    repeated ECGDataResponse caseReports = 2;
+    customer customer = 3;
+    Doctor doctor = 4;
+}
+
+message ECGDataResponse {
+    string caseNumber = 1;
+    string patchId = 2;
+    Cardiologs cardiologs = 3;
+    double timeStamp = 4;
+    Evaluated evaluated = 5;
+}
+
+message Cardiologs {
+    string ecgId = 1;
+    string reportUrl = 2;
+}
+
+message Empty {}
+
+message CasesStageRequest {
+    string page = 1;
+    string perPage = 2;
+    string stage = 3;
+    string platformPartner = 4;
+    string business = 5;
+    string search = 6;
+}
+
+message CareTaker {
+    string id = 1;
+    string name = 2;
+    Mobile mobile = 3;
+    string Prefered = 4;
+}
+
+message SymptomChecker {
+    bool isMonitored = 1;
+}
+
+message CustomerCaseRequest {
+    string customerId = 1;
+}
+
+message CreateCaseRequest {
+    string customerId = 1;
+    string nurseId = 2;
+    Doctor doctor = 3;
+    Condition condition = 4;
+    LayoutOccupancy layoutOccupancy = 5;
+    string platformPartner = 6;
+    string diagnosis = 7;
+    string uhid = 8;
+    string caseType = 9;
+    Business business = 10;
+    TotalDuration totalDuration = 11;
+    string patchId = 12;
+    CreatedBy createdBy = 13;
+    Business serviceEnabler = 14;
+}
+
+message CreatedBy {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string source = 4;
+}
+
+message Metadata {
+    bool showLiveVitals = 1;
+    bool enabled = 2;
+    int32 order = 3;
+    string analysisEngine = 4;
+    repeated string targetedClients = 5;
+}
+
+message MobileDeviceInfo {
+    string fcmId = 1;
+    string platformType = 2;
+    string make = 3;
+    string model = 4;
+    string appVersion = 5;
+    string createdAt = 6;
+}
+
+message UsageReportRequest {
+    string business = 1;
+    string from = 2;
+    string to = 3;
+    string condition = 4;
+    string stage = 5;
+    string page = 6;
+    string perPage = 7;
+}
+
+message UsageReportResponse {
+    repeated UsageReportCase patientCases = 1;
+    int32 count = 2;
+    int32 pages = 3;
+    string TotalPlannedDuration = 4;
+}
+
+message UsageReportCase {
+    string caseNumber = 1;
+    Condition condition = 2;
+    TotalDuration totalDuration = 3;
+    string liveStreamingStartTime = 4;
+    string recordingStartTime = 5;
+    string onboardingTime = 6;
+    string offboardingTime = 7;
+    string platformPartner = 8;
+    string stage = 9;
+    string status = 10;
+    DetailCustomer customer = 11;
+    bool isActive = 12;
+    string id = 13;
+    string createdAt = 14;
+    string updatedAt = 15;
+    Business business = 16;
+    Doctor doctor = 17;
+    repeated CareTaker careTaker = 18;
+    string uhid = 19;
+    string diagnosis = 20;
+    CreatedBy createdBy = 21;
+    repeated MobileDeviceInfo mobileDeviceInfoHistory = 22;
+    string timeZone = 23;
+}

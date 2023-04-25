@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "paths": {
+      "@models/*": [
+        "./src/api/models/*"
+      ],
+      "@services/*": [
+        "./src/api/services/*"
+      ],
+      "@controllers/*": [
+        "./src/api/controllers/*"
+      ],
+      "@communication/*": [
+        "./src/api/communication/*"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@utils/*": [
+        "./src/api/utils/*"
+      ],
+      "@routes/*": [
+        "./src/api/routes/*"
+      ],
+      "@middlewares": [
+        "./src/api/middlewares/*"
+      ],
+      "@validations": [
+        "./src/api/validations/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

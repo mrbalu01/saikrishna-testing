@@ -1,0 +1,18 @@
+syntax="proto3";
+
+service BuildInfoService {
+   rpc getBuildInfo (BuildInfoRequest) returns (BuildInfoResponse) {};
+}
+
+message BuildInfoRequest  {
+}
+
+message BuildInfoResponse  {
+    string serviceName = 1;
+    string build = 2;
+    string branch = 3;
+    string buildTime = 4;
+    string profile = 5;
+    int32 statusCode = 6;
+    string message = 7;
+}

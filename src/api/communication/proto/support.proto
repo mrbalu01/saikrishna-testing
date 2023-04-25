@@ -1,0 +1,47 @@
+syntax="proto3";
+
+service SupportService {
+   rpc createCallMeBack(callMeBackRequest) returns (callMeBackResponce) {};
+}
+
+message callMeBackResponce {
+   string id = 1;
+   Customer customer = 2;
+   Condition condition = 3;
+   string platformPartner = 4;
+   repeated Comment comments = 5;
+   int32 noOfDays = 6;
+   string createdAt = 7;
+   string updatedAt = 8;
+}
+
+message callMeBackRequest {
+    Customer customer = 1;
+    Condition condition = 2;
+    string platformPartner = 3;
+    repeated Comment comments = 4;
+    int32 noOfDays = 5;
+}
+
+message Mobile {
+   string number = 1;
+   string countryCode = 2;
+}
+
+message Comment {
+   string text = 1;
+   string createdAt = 2;
+}
+
+message Condition {
+   string id = 1;
+   string name = 2;
+}
+
+message Customer {
+   string id = 1;
+   string firstName = 2;
+   string lastName = 3;
+   string email = 4;
+   Mobile mobile = 5;  
+}

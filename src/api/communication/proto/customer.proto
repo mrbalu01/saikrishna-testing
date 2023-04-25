@@ -1,0 +1,258 @@
+syntax="proto3";
+
+service CustomerService {
+   rpc findOrCreate(CustomerRequest) returns (Customer){}
+   rpc getCustomerList(CustomersListRequest) returns (CustomerList){}
+   rpc setCustomerById(CustomerRequest) returns (Customer){}
+   rpc getCustomerById(GetCustomerByIdRequest) returns (Customer) {}
+   rpc getCustomersByPhoneNumber(CustomersByPhoneRequest) returns (CustomerList) {}
+   rpc registerPatient(RegisterRequest) returns (Customer){}
+   rpc getCustomersByUhid(GetCustomerByuhid) returns (Customer){}
+   rpc createCustomerCase(CaseRequest) returns (Case) {}
+   rpc updateCustomerCaseById(UpdateCaseRequest) returns (Case) {}
+   rpc updateCustomerById(UpdateCustomerRequest) returns (Customer) {}
+}
+
+message Case {
+    string caseNumber = 1;
+    Condition condition = 2;
+    repeated Vital vitals = 3;
+    TotalDuration totalDuration = 4;
+    string liveStreamingStartTime = 5;
+    string recordingStartTime = 6;
+    string onboardingTime = 7;
+    string offboardingTime = 8;
+    string platformPartner = 9;
+    string stage = 10;
+    string status = 11;
+    repeated History history = 12;
+    Customer customer = 13;
+    bool isActive = 15;
+    bool hasMonitoringPeriodElapsed = 17;
+    Feedback feedback = 18;
+    string id= 19;
+    string createdAt=20;
+    string updatedAt=21;
+    Business business=23;
+    Doctor doctor=24;
+    string anyDesk=25;
+    repeated CareTaker careTaker=27;
+    string nurseId=28;
+    LayoutOccupancy layoutOccupancy=29;
+    string diagnosis=30;
+    string uhid=31;
+}
+message CareTaker{
+    string id=1;
+    string name=2;
+    Mobile mobile=3;
+    string Prefered=4;
+}
+message Business{
+   string id=1;
+   string name=2;
+}
+message History{
+    string stage=1;
+    string status=2;
+    repeated StatusHistory statusHistory=3;
+    string createdAt=4;
+}
+
+message StatusHistory{
+    string status=1;
+    string createdAt=2;
+}
+
+message TotalDuration{
+    int32 duration=1;
+    string durationUnits=2;
+}
+
+message CaseRequest {
+   string customerId=1;
+   string nurseId=2;
+   Doctor doctor=3;
+   Condition condition=4;
+   LayoutOccupancy layoutOccupancy=5;
+   string platformPartner=6;
+   string diagnosis=7;
+   string uhid=8;
+}
+
+message UpdatedObj{
+   LayoutOccupancy layoutOccupancy=1;
+   string diagnosis=2;
+   Doctor doctor=3;
+   Height height=4;
+   string weight=5;
+}
+
+message UpdateCaseRequest {
+   string id=1;
+   UpdatedObj updatedObj=2;
+}
+
+message Doctor {
+   string id=1;
+   string firstName=2;
+   string lastName=3;
+}
+message LayoutOccupancy {
+   string businessId=1;
+   repeated Layout layout=2;
+}
+message Layout {
+   string layoutName=1;
+   string layoutValue=2;
+}
+
+message Feedback{
+    int32 rating=1;
+    string comment=2;
+    repeated string options=3;
+}
+
+message Condition {
+    string id = 1;
+    string name = 2;
+    ConditionDuration duration = 3;
+    Metadata metadata = 4;
+}
+
+message ConditionDuration {
+    bool isFixed = 1;
+    int32 value = 2;
+    string durationUnits = 3;
+}
+message Vital{
+    string id=1;
+    string name=2;
+    MonitoringFrequency monitoringFrequency=3;
+    bool isMonitored=4;
+    string code =5;
+}
+message MonitoringFrequency{
+    string duration = 1;
+    string durationUnits = 2 ;
+    string periodicity = 3;
+    string periodicityUnits = 4;
+}
+
+message customer{
+   Customer id=1;
+   string firstName=2;
+   string lastName=3;
+}
+
+message CustomersByPhoneRequest {
+   string mobile=1;
+   string countryCode=2;
+}
+
+message GetCustomerByIdRequest {
+   string id = 1;
+}
+
+message GetCustomerByuhid {
+   string uhid=1;
+}
+
+message Customer {
+   string id=1;
+   Mobile mobile=2;
+   string email=3;
+   string firstName=4;
+   string lastName=5;
+   string gender=6;
+   string dob=7;
+   string createdAt=8;
+   string updatedAt=9;
+   MobileDeviceInfo mobileDeviceInfo=10;
+   PlatformPartner platformPartner=11;
+   string referralCode =12;
+   string picture =13;
+   string role =14;
+   int32 age =15;
+   string patientId=16;
+   repeated string uhid=17;
+   Height height=18;
+   string weight=19;
+   string caseId=20;
+   bool isActive=21;
+   Case activeCase=22;
+}
+
+message Height{
+   string feet=1;
+   string inches=2;
+}
+
+message MobileDeviceInfo{
+   string fcmId=1;
+   string platformType=2;
+   string make=3;
+   string model=4;
+}
+
+message Mobile{
+   string number=1;
+   string countryCode=2;
+}
+
+message PlatformPartner{
+   string id=1;
+   string name=2;
+}
+
+message CustomerRequest{
+   Mobile mobile=1;
+   string firstName=2;
+   string lastName=3;
+   string email=4;
+   string id=5;
+   string patientId=6;
+}
+message RegisterRequest{
+   Mobile mobile=1;
+   string firstName=2;
+   string lastName=3;
+   string gender=4;
+   string dob=5;
+   string uhid=6;
+   Height height=7;
+   string weight=8;
+}
+
+message UpdateCustomerRequest {
+   string id=1;  
+   UpdatedCustomerObj updatedCustomerObj=2;
+}
+message UpdatedCustomerObj{
+   Mobile mobile=1;
+   string firstName=2;
+   string lastName=3;
+   Height height=4;
+   string weight=5;
+   string dob=6;
+   string gender=7;
+}
+
+message CustomersListRequest{
+   string page=1;
+   string perPage=2;
+   string search=3;
+}
+
+message CustomerList {
+   repeated Customer Customers = 1;
+   int32 count = 2;
+}
+
+message Metadata {
+    bool showLiveVitals = 1;
+    bool enabled = 2;
+    int32 order = 3;
+    string analysisEngine = 4;
+    repeated string targetedClients = 5;
+}

@@ -1,0 +1,44 @@
+[1mdiff --cc src/api/services/doctor.service.js[m
+[1mindex 7f9d419,376fad8..0000000[m
+[1m--- a/src/api/services/doctor.service.js[m
+[1m+++ b/src/api/services/doctor.service.js[m
+[36m@@@ -43,26 -43,22 +43,22 @@@[m [mexports.getAllDoctor = async (query) =[m
+  [m
+  exports.createDoctor = async (doctor) => {[m
+     try {[m
+[31m-       let { email } = doctor[m
+[31m-       let user = await User.findOne({ email })[m
+[31m-       console.log(user)[m
+[31m-       if (user) {[m
+[31m-          return user.transform()[m
+[31m-       } else {[m
+[31m-          let { mobile } = doctor[m
+[31m-          if (mobile) {[m
+[32m+       let { mobile } = doctor[m
+[32m+       if (mobile) {[m
+[31m -         let user = await User.findOne({ 'mobile.number': mobile.number, 'mobile.countryCode': mobile.countryCode })[m
+[31m -         if (user) {[m
+[31m -            throw { message: "User with this mobile number already exist" }[m
+[32m +            let user = await User.findOne({'mobile.number': mobile.number, 'mobile.countryCode': mobile.countryCode })[m
+[32m +            if (user) {[m
+[32m +               throw { message: "User with this mobile number already exist" }[m
+[32m +            }[m
+           }[m
+[31m-          doctor.password = 'pass1234';[m
+[31m-          const user = new User(doctor);[m
+[31m-          const savedUser = await user.save();[m
+[31m-          return savedUser.transform()[m
+[31m -      }[m
+[32m+       else {[m
+[32m+          throw { message: "Mobile number is required to create doctor." }[m
+        }[m
+[32m+       doctor.password = 'pass1234';[m
+[32m+       const user = new User(doctor);[m
+[32m+       const savedUser = await user.save();[m
+[32m+       return savedUser.transform()[m
+     } catch (error) {[m
+[31m -      throw error[m
+[32m +       throw error[m
+     }[m
+  }[m
+  [m

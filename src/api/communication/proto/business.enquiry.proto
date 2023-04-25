@@ -1,0 +1,32 @@
+syntax="proto3";
+
+service BusinessEnquiryService {
+   rpc createBusinessEnquiry(BusinessEnquiry) returns (BusinessEnquiryResponse) {};
+}
+
+message BusinessEnquiry {
+   Business business = 1;
+   string platformPartner = 2;
+   string message = 3;
+}
+
+message BusinessEnquiryResponse {
+   string id = 1;
+   Business business = 2;
+   string platformPartner = 3;
+   string message = 4;
+   string createdAt = 5;
+   string updatedAt = 6;
+}
+
+message Mobile {
+   string number = 1;
+   string countryCode = 2;
+}
+
+message Business {
+   string name = 1;
+   string website = 2;
+   string email = 3;
+   Mobile mobile = 4;   
+}

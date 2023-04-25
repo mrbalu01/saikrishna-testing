@@ -1,0 +1,98 @@
+syntax="proto3";
+
+service VitalInfrenceService {
+   rpc GetAllVitalLatestData(VitalDataRequest) returns (VitalDataResponse) {};
+   rpc GetVitalLatestData(VitalDataRequest) returns (VitalData) {};
+   rpc GetVitalDetailData(VitalDataRequest) returns (VitalDetailDataResponse){};
+   rpc GetVitalsForReport(VitalDataForReportRequest) returns (VitalDataForReportResponse){};
+   rpc GetVitalSummary(VitalSummaryRequest) returns (VitalSummaryResponse){};
+}
+
+message VitalDataForReportRequest {
+   string caseNumber=1;
+   string from=2;
+   string to=3;
+   string limit=4;
+}
+
+message VitalDataForReportResponse {
+   repeated VitalDataForReport data = 1;
+}
+
+message VitalDataForReport {
+   Analysis analysis = 1;
+   string status = 2;
+   string caseNumber = 3;
+   Vital vital = 4;
+   double value = 5;
+   string timeStamp = 6;
+   Evaluated evaluated = 7;
+}
+
+message Evaluated {
+   string to = 1;
+   string from = 2;
+}
+
+message VitalDataRequest {
+    string patchId=1;
+    string caseNumber=2;
+    string type=3;
+    string code=4;
+    string page=5;
+    string perPage=6;
+}
+
+message VitalDetailDataResponse{
+   repeated VitalData data = 1;
+   double average = 2;
+   double recent = 3;
+   repeated double recentValues = 4;
+   string recentTimeStamp = 5;
+   int32 count = 6;
+   int32 pages = 7;
+}
+
+message VitalDataResponse{
+   VitalData ECG=1;
+   VitalData RR=2;
+   VitalData HR=4;
+   VitalData BP=5;
+   VitalData TEMP=6;
+   VitalData SPO2=8;
+   VitalData ATEMP=9;
+}
+
+message VitalData {
+   Vital vital = 1;
+   string status = 2;
+   double value = 3;
+   repeated double values = 4;
+   string timeStamp = 5;
+   Analysis analysis = 6;
+}
+
+message Analysis{
+   int32 score = 1;
+   string group = 2;
+   string ecgCondition = 3;
+}
+
+message Vital{
+   string code = 1;
+   string name = 2;
+}
+
+message VitalSummaryRequest {
+   string caseNumber = 1;
+   string fromTimeStamp = 2;
+   string toTimeStamp = 3;
+}
+
+message VitalSummaryResponse {
+   repeated VitalData inferVitals = 1;
+   string fromTimeStamp = 2;
+   string toTimeStamp = 3;
+   bool first = 4;
+   bool last = 5;
+}

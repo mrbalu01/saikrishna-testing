@@ -1,0 +1,17 @@
+version: "1"
+services:
+  doctor-api:
+    build: .
+    environment:
+      - MONGO_URI=mongodb://mvm-vigo-service1:v1taLs0nt#Eg0@135.181.42.23:27017/mvm2-doctor?authSource=admin
+    volumes:
+      - .:/app
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

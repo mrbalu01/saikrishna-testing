@@ -1,0 +1,148 @@
+syntax="proto3";
+
+service DoctorService {
+   rpc getDoctorById(doctorRequest) returns (doctor){};
+   rpc getAllDoctor(doctorRequest) returns (getDoctorsList){};
+   rpc getDoctorsByBusinessId(doctorRequest) returns (getDoctorsListBybusiness){};
+   rpc createDoctor(doctor) returns (doctor){};
+   rpc deleteDoctor(deleteDoctorReq) returns (doctor){};
+   rpc updateDoctor(updateDoctorReq) returns (doctor){};
+   rpc checkDuplicateLoginId(loginIdRequest) returns (loginIdResponse){};
+   rpc getAllUserAgents(doctorRequest) returns (getDoctorsList){};
+   rpc getUserAgentsByBusinessId(doctorRequest) returns (getUserAgentListBybusiness){};
+   rpc createUserAgent(DoctorWithPasswordRequest) returns (doctor){};
+   rpc deleteUserAgent(deleteDoctorReq) returns (doctor){};
+}
+
+message loginIdRequest {
+    string loginId = 1;
+}
+
+message loginIdResponse {
+    bool isDuplicate = 1;
+}
+
+message deleteDoctorReq {
+    string id = 1;
+    string business = 2;
+    DeletedBy deletedBy = 3;
+}
+
+message updateDoctorReq{
+    string id =1;
+    DoctorWithPasswordRequest doctor=2;
+}
+
+message doctorRequest {
+    string business=1;
+    string doctor=2;
+    string platformPartner=3;
+    string page=4;
+    string perPage=5;
+    string query = 6;
+    string userType = 7;
+    string isActive = 8;
+    string isDeleted = 9;
+}
+
+message getDoctorsList{
+    repeated doctor users=1;
+    int32 count =2;
+    int32 pages=3;
+}
+
+message getDoctorsListBybusiness{
+    repeated doctor doctors=1;
+}
+
+message getUserAgentListBybusiness{
+    repeated doctor users=1;
+}
+
+message doctor {
+    string firstName = 1;
+    string lastName = 2;
+    string platformPartner = 3;
+    repeated businessPartner businessPartners = 4;
+    string speciality = 5;
+    string firstLogin = 6;
+    mobile mobile = 8;
+    string status = 10;
+    string id = 11;
+    Business business = 12;
+    string bioData = 13;
+    string MCIRegNumber = 14;
+    string vigoId = 16;
+    string loginId = 17;
+    string userType = 18;
+    UserPreferences userPreferences = 19;
+}
+
+message DoctorWithPasswordRequest {
+    string firstName =1;
+    string lastName =2;
+    string platformPartner =3;
+    repeated businessPartner businessPartners = 4;
+    string speciality =5;
+    string firstLogin =6;
+    mobile mobile =8;
+    string status =10;
+    string id =11;
+    Business business=12;
+    string bioData=13;
+    string MCIRegNumber=14;
+    string vigoId=16;
+    string loginId=17;
+    string userType=18;
+    UserPreferences userPreferences=19;
+    string password=20;
+}
+
+message UserPreferences {
+    string language = 1;
+    string weight = 2;
+    string height = 3;
+}
+
+message Business {
+   string id=1;
+   string name=2;
+}
+
+message mobile {
+    string countryCode=1;
+    string number=2;
+}
+
+message businessPartner {
+    string businessPartnerId = 1;
+    string businessPartnerName = 2;
+    string displayName = 3;
+    string speciality = 4;
+    string email = 5;
+    bool isActive = 6;
+    repeated Layout layout = 7;
+    string location = 8;
+    repeated Role roles = 9;
+    bool isDeleted = 10;
+    DeletedBy deletedBy = 11;
+    string providerNumber = 12;
+    bool isServiceEnabler = 13;
+}
+
+message DeletedBy {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string source = 4;
+    string timeStamp = 5;
+}
+
+message Role {
+    string role = 1;
+}
+
+message Layout {
+    string layoutName = 1;
+    repeated string layoutValues = 2;
+}

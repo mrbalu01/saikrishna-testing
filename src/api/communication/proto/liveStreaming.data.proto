@@ -1,0 +1,121 @@
+syntax="proto3";
+
+service LiveStreamingSerice {
+   rpc getLiveStreaming(LiveStreamingRequest) returns (LiveStreamingResponce) {};
+   rpc getVV330LiveStreaming(LiveStreamingRequest) returns (VV330LiveStreamingResponce) {};
+   rpc getVV200LiveStreaming(LiveStreamingRequest) returns (VV200LiveStreamingResponce) {};
+   rpc latestVV200Temp(LiveStreamingRequest) returns (VV200LiveStreaming) {};
+   rpc getLiveStreamingWithPagination(LiveStreamingWithPaginationRequest) returns (LiveStreamingWithPaginationResponse) {};
+}
+
+message LiveStreamingRequest {
+    string patchId = 1;
+    string caseNumber = 2;
+    string to = 3;
+    string from = 4;
+    string deviceName = 5;
+}
+
+message LiveStreamingResponce{
+   repeated LiveStreaming liveStreaming=1;
+}
+
+message VV330LiveStreamingResponce{
+   repeated VV330LiveStreaming liveStreaming=1;
+}
+
+message VV200LiveStreamingResponce{
+   repeated VV200LiveStreaming liveStreaming=1;
+}
+
+message ECG {
+    repeated int32 chA =1;
+    repeated int32 chD =2;
+    string codePerMv =3;
+}
+
+message HR{
+    string state = 1;
+    string hrMap = 2;
+    int32 value = 3;
+    repeated int32 hrSamples = 4;
+}
+
+message Activity{
+    repeated float accelZ =1;
+    repeated float accelX =2;
+    repeated float accelY =3;
+    string postureValue =4;
+    repeated string activity =5;
+    string activityValue =6;
+    repeated string posture =7;
+}
+
+message RR{
+    repeated float rrOut =1;
+    repeated float rrEdr =2;
+    repeated float rrTti =3;
+    string state =4;
+    repeated float respOut =5;
+    string rrMap =6;
+    string rrCode =7;
+}
+
+message Temprature{
+    repeated int32 tempData =1;
+    int32 codePerDegree =2;
+    string state =3;
+}
+
+message LiveStreaming{
+    string id =1;
+    ECG ecg =2;
+    string caseNumber = 3;
+    string patchId =4;
+    HR hr=5;
+    string timeStamp = 6;
+    Activity activity =7;
+    RR rr = 8;
+    int32 seq = 9;
+    string createdAt =10;
+    string updatedAt =11;
+    Temprature temperature = 12;
+}
+
+message VV330LiveStreaming{
+    string _id =1;
+    string caseNumber = 2;
+    string patchId =3;
+    string timeStamp = 4;
+    string createdAt =5;
+    string updatedAt =6;
+    repeated int32 ecg =7;
+    string RR=8;
+    string HR=9;
+}
+
+message VV200LiveStreaming{
+    string _id =1;
+    string caseNumber = 2;
+    string patchId =3;
+    string timeStamp = 4;
+    string createdAt =5;
+    string updatedAt =6;
+    double displayTemperature=7;
+}
+
+message LiveStreamingWithPaginationRequest {
+    string patchId = 1;
+    string caseNumber = 2;
+    string to = 3;
+    string from = 4;
+    string deviceName = 5;
+    string page = 6;
+    string perPage = 7;
+}
+
+message LiveStreamingWithPaginationResponse {
+    repeated VV330LiveStreaming liveStreaming=1;
+    int32 count = 2;
+    int32 pages = 3;
+}

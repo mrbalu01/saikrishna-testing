@@ -1,0 +1,56 @@
+syntax="proto3";
+
+service DeviceInstanceService {
+   rpc validate(ValidateRequest) returns (DeviceInstance) {};
+   rpc addDevice(AddRequest) returns (DeviceInstance) {};
+   rpc setDeviceInstanceToMapped(ValidateRequest) returns (DeviceInstance) {};
+}
+
+message DeviceInstance {
+   string id =1;
+   string patchId=2;
+   string provisioningStatus=3;
+   MonitoringPeriod monitoringPeriod =4;
+   string isMapped = 5;
+   Device device = 6;
+}
+
+message Device {
+   string id = 1;
+   string name = 2;
+   string type = 3;
+}
+
+message MonitoringPeriod {
+   string id = 1;
+   string text = 2;
+   string duration = 3;
+   string durationUnits=4;
+}
+
+message CustomerCase{
+   string id=1;
+   string caseNumber=2;
+}
+
+message Customer {
+   string id =1;
+   string firstName=2;
+   string lastName=3;
+   Mobile mobile=4;
+}
+
+message Mobile {
+   string countryCode=1;
+   string number=2;
+}
+
+message ValidateRequest{
+   string patchId=1;
+}
+
+message AddRequest{
+   string patchId=1;
+   CustomerCase customerCase=2;
+   Customer customer=3;
+}

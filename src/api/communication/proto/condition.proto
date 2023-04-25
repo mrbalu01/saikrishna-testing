@@ -1,0 +1,88 @@
+syntax="proto3";
+
+service ConditionService {
+   rpc getConditions(GetAllConditionsRequest) returns (Conditions){}
+   rpc getConditionById(ConditionRequest) returns (Condition){}
+}
+
+message GetAllConditionsRequest {
+    string isFixed = 1;
+}
+
+message ConditionRequest {
+    string id = 1;
+}
+                                                                                                                                                                        
+message Conditions {
+    repeated Condition conditions=1;
+}
+
+message Condition {
+    string id = 1;
+    string name = 2;
+    Duration duration = 3;
+    string platformPartner = 4;
+    repeated Vital vitals = 5;
+    repeated Device devices = 6;
+    Metadata metadata = 7;
+}
+
+message Device {
+    string id = 1;
+    string name = 2;
+    int32 priority = 3;
+    MonitoringDuration monitoringDuration = 4;
+}
+
+message MonitoringDuration {
+    int32 duration = 1;
+    string durationUnits = 2;
+ }
+
+message Duration {
+    bool isFixed = 1;
+    int32 value = 2;
+    enum DurationUnits {
+        MILLISECONDS = 0;
+        SECONDS = 1;
+        MINUTES = 2;
+        HOURS = 3;
+        DAYS = 4;
+    }
+    string durationUnits = 3;
+}
+
+message Vital{
+   string id = 1;
+   string name = 2;
+   MonitoringFrequency monitoringFrequency = 3;
+   bool isMonitored = 4;
+   string code = 5;
+   string type = 6;
+   string monitoringType = 7;
+   Time monitoringStartTimeInTheDay = 8;
+   repeated Time monitoringTimes = 9;
+}
+
+message MonitoringFrequency {
+   int32 duration = 1;
+   string durationUnits = 2;
+   int32 periodicity = 3;
+   string periodicityUnits = 4;
+}
+
+message Time {
+   int32 hour = 1;
+   int32 min = 2;
+   string ampm = 3;
+}
+
+message Metadata {
+    bool showLiveVitals = 1;
+    bool enabled = 2;
+    int32 order = 3;
+    string analysisEngine = 4;
+    repeated string targetedClients = 5;
+}
+
+message Empty{}

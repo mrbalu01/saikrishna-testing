@@ -1,0 +1,59 @@
+syntax="proto3";
+
+service CaseMessageService {
+   rpc createCaseMessage(CreateCaseMessageRequest) returns (CaseMessage){}
+   rpc getAllCaseMessages(CaseMessageRequest) returns (CaseMessagesResponse){}
+   rpc getCaseMessagesByRecipient(CaseMessageRequest) returns (CaseMessagesResponse){}
+   rpc markAsRead(MarkAsReadRequest) returns (CaseMessage){}
+   rpc getCaseMessagesByCustomerCase(CaseMessageRequest) returns (CaseMessagesResponse){}
+}
+
+message CaseMessageRequest {
+   string page = 1;
+   string perPage = 2;
+   string customerCase = 3;
+   string recipient = 4;
+}
+
+message MarkAsReadRequest {
+   string caseMessage = 1;
+   string recipient = 2;
+}
+
+message CreateCaseMessageRequest {
+   string customerCase = 1;
+   string sentBy = 2;
+   repeated string recipients = 3;
+   string text = 4;
+}
+
+message CaseMessagesResponse {
+   repeated CaseMessage caseMessages = 1;
+   int32 unread = 2;
+   int32 count = 3;
+   int32 pages = 4;
+}
+
+message CaseMessage {
+   string id = 1;
+   string customerCase = 2;
+   string sentBy = 3;
+   repeated string recipients = 4;
+   string text = 5;
+   bool isRead = 6;
+   string createdAt = 7;
+   string updatedAt = 8;
+}
+
+message CustomerCase {
+   string id = 1;
+   Customer customer = 2;
+}
+
+message Customer {
+   string id = 1;
+   string firstName = 2;
+   string lastName = 3;
+   string patientId = 4;
+   string gender = 5;
+}

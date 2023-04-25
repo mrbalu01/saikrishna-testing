@@ -1,0 +1,60 @@
+syntax="proto3";
+
+service CaseAlertService {
+    rpc addCustomerAndCaseToCache(addCaseToCacheRequest) returns (CacheUpdateResponse){}
+    rpc updateCustomerInCaseToCache(addCaseToCacheRequest) returns (CacheUpdateResponse){}
+    rpc addDoctorToCache(AddDoctorRequest) returns (CacheUpdateResponse){}
+}
+
+message addCaseToCacheRequest {
+    string id= 1;
+    string caseNumber = 2;
+    string platformPartner = 3;
+    CustomerDetails customer = 4;
+    Doctor doctor = 5;
+    Business business = 6;
+}
+
+message AddDoctorRequest {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string fcmId = 4;
+    string platformType = 5;
+    string loginId = 6;
+    string password = 7;
+    Mobile mobile = 8;
+    string email = 9;
+}
+
+message Doctor {
+   string id = 1;
+   string firstName = 2;
+   string lastName = 3;
+}
+
+message CustomerDetails{
+   string id=1;
+   string firstName=2;
+   string lastName=3;
+   string email=4;
+   Mobile mobile=5;
+   string fcmId=6;
+   string uhid = 7;
+   string platformType = 8;
+   string patientId = 9;
+}
+
+message Mobile{
+   string number=1;
+   string countryCode=2;
+}
+
+message CacheUpdateResponse {
+    string message = 1;
+}
+
+message Business {
+   string id = 1;
+   string name = 2;
+}

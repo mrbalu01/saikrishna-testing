@@ -1,0 +1,48 @@
+syntax="proto3";
+
+service PageContentService {
+   rpc getPageContents(PageContentsRequest) returns (PageContentsResponse) {};
+}
+
+message PageContentsRequest {
+   string language = 1;
+   string feature = 2;
+   string category = 3; 
+   string platformPartner = 4;
+   string client = 5;
+   string query = 6;
+   string page = 7;
+   string perPage = 8;
+   string contentType = 9;
+   string expired = 10;
+}
+
+message PageContentsResponse {
+   repeated PageContent pageContents = 1;
+   int32 count = 2;
+   int32 pages = 3;
+}
+
+message PageContent {
+   string id = 1;
+   string attributeName = 2;
+   string contentType = 3;
+   ContentImage contentImage = 4;
+   repeated ContentText contentText = 5;
+   string language = 6;
+   string client = 7;
+   string feature = 8;
+   string category = 9;
+   string platformPartner = 10;
+   string attributeDisplayName = 11;
+   string expired = 12;
+}
+
+message ContentText {
+   string value = 1;
+}
+
+message ContentImage {
+   string base64 = 1;
+   string imageFormat = 2;
+ }

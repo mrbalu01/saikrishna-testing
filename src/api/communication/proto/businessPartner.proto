@@ -1,0 +1,93 @@
+syntax="proto3";
+
+service BusinessPartnerService {
+   rpc createBusinessPartner(BusinessPartner) returns (BusinessPartner) {};
+   rpc getBusinessPartner(BusinessPartnerRequest) returns (BusinessPartnerResponse) {};
+   rpc getBusinessPartnerById(BusinessPartnersReq) returns (BusinessPartner) {};
+   rpc getBusinessPartnerByUniqueId(BusinessPartnerByUniqueIdReq) returns (BusinessPartner) {};
+   rpc getBusinessPartnerNames(BusinessPartnersNameReq) returns (BusinessPartnersNameRes) {};
+}
+
+message BusinessPartnerByUniqueIdReq {
+   string uniqueId = 1;
+}
+
+message BusinessPartnerResponse {
+   repeated BusinessPartner businessPartners = 1;
+}
+
+message BusinessPartner {
+    string name = 1;
+    string platformPartner = 2;
+    string id = 3;
+    string uniqueId = 4;
+    string associatedGroup = 5;
+    repeated Contact contact = 6;
+    repeated Layout layout = 7;
+    string location = 8;
+    string status = 9;
+    string licenseNumber = 10;
+    string email = 11;
+    Mobile mobile = 12;
+    Mobile alternateMobile = 13;
+    string pinCode = 14;
+    bool isServiceEnabler = 15;
+    repeated Service services = 16;
+    ServiceEnabler serviceEnabler = 17;
+    string vigoId = 18;
+    string addressLine1 = 19;
+    string addressLine2 = 20;
+    string website = 21;
+}
+
+message Layout {
+   string layoutName = 1;
+   repeated string layoutValues=2;
+}
+
+message Contact {
+   Mobile mobile = 1;
+   string permission = 2;
+   string firstName = 3;
+   string lastName = 4;
+   string email = 5;
+}
+
+message BusinessPartnersReq {
+   string id=1;
+}
+
+message BusinessPartnersNameReq {
+   repeated string ids = 1;
+}
+
+message BusinessPartnersNameRes {
+   repeated BusinessPartnersNameDetails businessPartners = 1;
+}
+
+message BusinessPartnersNameDetails {
+   string id = 1;
+   string name = 2;
+   string location = 3;
+}
+
+message Mobile {
+   string number = 1;
+   string countryCode = 2;
+}
+
+message Service {
+   string id = 1;
+   string name = 2;
+}
+
+message ServiceEnabler {
+   string id = 1;
+   string name = 2;
+}
+
+message Empty{}
+
+message BusinessPartnerRequest {
+   string serviceEnablerId = 1;
+}

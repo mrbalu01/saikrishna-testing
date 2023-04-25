@@ -1,0 +1,97 @@
+syntax="proto3";
+
+service EcgEventService {
+   rpc createEcgEvents(CreateEcgEventsRequest) returns (Empty) {};
+   rpc getEcgEvents(GetEcgEventsRequest) returns (GetEcgEventsResponse) {};
+   rpc countEcgEvents(CountEcgEventsRequest) returns (CountEcgEventsResponse) {};
+}
+
+message CountEcgEventsRequest {
+   string caseNumber = 1;
+   string lastViewedAt = 2;
+   string platformPartner = 3;
+   string eventType = 4;
+}
+
+message CountEcgEventsResponse {
+   int32 ecgEventsCount = 1;
+}
+
+message GetEcgEventsRequest {
+   string caseNumber = 1;
+   string patchId = 2;
+   string eventType = 3;
+   string name = 4;
+   string query = 5;
+   string page = 6;
+   string perPage = 7;
+   string from = 8;
+   string to = 9;
+   string medicalDetailsFilter = 10;
+   string platformPartner = 11;
+}
+
+message GetEcgEventsResponse {
+   repeated EcgEventsResponse ecgEvents = 1;
+   int32 count = 2;
+   int32 pages = 3;
+}
+
+message EcgEventsResponse {
+   string caseNumber = 1;
+   string patchId = 2;
+   Evaluated evaluated = 3;
+   string inferVitalId = 4;
+   string eventType = 5;
+   Beat beat = 6;
+   Rhythm rhythm = 7;
+   string name = 8;
+   string timeStamp = 9;
+}
+
+message CreateEcgEventsRequest {
+   string caseNumber = 1;
+   Evaluated evaluated = 2;
+   string inferVitalId = 3;
+   repeated EcgEvents events = 4;
+   string patchId = 5;
+}
+
+message EcgEvents {
+  string eventType = 1;
+  Beat beat = 2;
+  Rhythm rhythm = 3;
+}
+
+message Beat {
+   string id = 1;
+   string name = 2;
+   string position = 3;
+   int32 RR = 4;
+   int32 RRp = 5;
+   int32 HR = 6;
+}
+
+message Rhythm {
+   string id = 1;
+   string name = 2;
+   string start = 3;
+   string end = 4;
+   int32 firstRR = 5;
+   int32 numberOfBeats = 6;
+   int32 shortestRR = 7;
+   int32 longestRR = 8;
+   int32 averageRR = 9;
+   int32 minHR = 10;
+   int32 maxHR = 11;
+   int32 averageHR = 12;
+}
+
+message Evaluated {
+   string to = 1;
+   string from = 2;
+}
+
+message Empty {
+
+}

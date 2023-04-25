@@ -1,0 +1,30 @@
+The following db changes are required while deploying vigo clinic app.
+Making these changes well before deployment is preferred.
+ 1) Mark existing doctors as internal-doctor for the BP
+
+use mvm-doctor;
+
+db.users.updateMany(
+    { role : "DOCTOR", "businessPartners.businessPartnerId" :{ $exists: true}}, 
+    { $set: { userType: "DOCTOR", "businessPartners.$.roles" : [{"role": "INTERNAL_DOCTOR"}] }}
+);
+
+
+ 2) Update the DoctorSequence Number [Value must be more then mvm2-admin.doctorsequences]
+
+use mvm-doctor;
+
+db.doctorsequences.updateOne({}, { $set: { number: 400 } });
+
+--- Done in previous release ---
+
+Pending DB Changes:
+3) Update the isDeleted flag for all users
+
+use mvm-doctor;
+
+db.users.updateMany(
+    { "businessPartners.businessPartnerId" :{ $exists: true}}, 
+    { $set: { "businessPartners.$[].isDeleted" : false}}
+);
+

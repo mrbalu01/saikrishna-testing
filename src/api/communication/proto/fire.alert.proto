@@ -1,0 +1,177 @@
+syntax="proto3";
+
+service FireAlertService {
+    rpc fireAlert(fireAlertRequest) returns (Acknowledge){}
+    rpc fireAppointmentAlert(fireAlertRequest) returns (Acknowledge){}
+    rpc fireCustomizedAlert(fireCustomizedAlertRequest) returns (Acknowledge){}
+}
+
+message fireCustomizedAlertRequest{
+    AlertData alertData=1;
+    string code=2;
+    string event=3;
+    string status=4;
+    string category=5;
+}
+
+message AlertData{
+    string caseNumber=1;
+    Plan plan =2;
+    string customer=3;
+    string doctor=4;
+    string platformPartner=5;
+    string caseId=6;
+    Order order=7;
+    CustomMessage customMessage=8;
+    Agent agent=9;
+    string fireAt=10;
+    string reportUrl=11;
+    Business business = 12;
+}
+
+message Agent{
+    string firstName=1;
+    string lastName=2;
+    string id=3;
+}
+
+message CustomMessage{
+    string sendTo=1;
+    string message=2;
+    bool email=3;
+    bool push=4;
+    bool sms=5;
+}
+
+message Order{
+    Mobile mobile=1;
+    string id=2;
+    string order=3;
+}
+
+message fireAlertRequest {
+    string caseNumber = 1;
+    string code=2;
+    string event=3;
+    string status=4;
+    string patchId=5;
+    string category=6;
+    string caseId = 7;
+    Appointment appointment = 8;
+}
+
+message Appointment{
+    Doctor doctor = 1;
+    Customer customer=2;
+    Business business=3;
+    Case case =4;
+    string communicationLink=5;
+    string recordingLink=6;
+    string callStartTime=7;
+    string callEndTime=8;
+    TotalDuration totalDuration=9;
+    string callJoinedTime=10;
+    string callDeclinedTime=11;
+    int32 callDurationInSecond=12;
+    string platformPartner =13;
+    string status=14;
+    string createdBy=15;
+    string consultationFee=16;
+    string description=17;
+    Ammount amount=18;
+    Payment payment=19;
+    repeated History history=20;
+    string createdAt =21;
+    string updatedAt =22;
+    string id=23;
+    string location=24;
+    bool locationProvided=25;
+}
+
+message Doctor {
+    string id=1;
+    string firstName=2;
+    string lastName=3;
+}
+
+message Customer {
+    string id=1;
+    string firstName=2;
+    string lastName=3;
+    Mobile mobile=4;
+}
+
+message Mobile{
+    string countryCode=1;
+    string number=2;
+}
+
+message Business{
+   string id=1;
+   string name=2;
+}
+
+message Case{
+   string id=1;
+   Plan plan=2;
+   string caseNumber=3;
+   repeated Vital vitals = 4;
+}
+
+message Vital{
+    string id=1;
+    string name=2;
+    MonitoringFrequency monitoringFrequency=3;
+    bool isMonitored=4;
+    string code =5;
+}
+
+message MonitoringFrequency{
+    string duration = 1;
+    string durationUnits = 2 ;
+    string periodicity = 3;
+    string periodicityUnits = 4;
+}
+
+message Plan{
+    string id=1;
+    Package package=2;
+    Condtion condition=3;
+    TotalDuration totalDuration=4;
+}
+
+message Package {
+    string id=1;
+    string name=2;
+}
+
+message Condtion {
+    string id=1;
+    string name=2;
+}
+
+message TotalDuration{
+    int32 duration=1;
+    string durationUnits=2;
+}
+
+message Ammount{
+    int32 value=1;
+    string currency=2;
+}
+
+message Payment{
+    string mode=1;
+    bool isPending =2;
+    Ammount amount = 3;
+}
+
+message History{
+    string status =1;
+    string createdAt =2;
+    string updatedAt =3;
+}
+
+message Acknowledge {
+    string message = 1;
+}

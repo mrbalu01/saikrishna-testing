@@ -1,0 +1,224 @@
+syntax="proto3";
+
+service CardiologsSummaryService {
+   rpc createCardiologsSummary(createCardiologsSummaryRequest) returns (Empty) {};
+   rpc getCardiologsSummary(getCardiologsSummaryRequest) returns (getCardiologsSummaryResponse) {};
+   rpc getReportUrlFromCS(getReportUrlFromCSRequest) returns (getReportUrlFromCSResponse) {};
+}
+
+message createCardiologsSummaryRequest {
+   string caseNumber = 1;
+   string inferVitalId = 2;
+   CardiologsSummary cardiologsSummary = 3;
+}
+
+message CardiologsSummary {
+   Metrics metrics = 1;
+   Report report = 2;
+}
+
+message Metrics {
+   Duration duration = 1;
+   HeartRate heartRate = 2;
+   int32 totalBeats = 3;
+   Bradycardia bradycardia = 4;
+   Tachycardia tachycardia = 5;
+   Pac pac = 6;
+   PacCouplets pacCouplets = 7;
+   Pvc pcv = 8;
+   Couplets couplets = 9;
+   Bigeminy bigeminy = 10;
+   Pacemaker pacemaker = 11;
+   OtherBeats otherBeats = 12;
+   Pause pause = 13;
+   AvBlock avBlock = 14;
+   Afib afib = 15;
+   Vt vt = 16;
+   OtherSvt otherSvt = 17;
+   Noise noise = 18;
+   PatientEvents patinetEvents = 19;
+}
+
+message Duration {
+   int32 total = 1;
+   int32 trimmed = 2;
+   int32 readable = 3;
+}
+
+message HeartRate {
+   Value minimum = 1;
+   Value maximum = 2;
+   Value average = 3;
+   Value minimumSinus = 4;
+   Value maximumSinus = 5;
+}
+
+message Value {
+   int32 value = 1;
+   float timestamp = 2;
+}
+
+message Bradycardia {
+   int32 count = 1;
+   float burden = 2;
+}
+
+message Tachycardia {
+   int32 count = 1;
+   float burden = 2;
+}
+
+message Pac {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   float burden = 4;
+   int32 isolatedCount = 5;
+   int32 consolidatedCount = 6;
+}
+
+message PacCouplets {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   int32 coupletsCount = 4;
+   float burden = 5;
+}
+
+message Pvc {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   float burden = 4;
+   int32 isolatedCount = 5;
+   int32 consolidatedCount = 6;
+}
+
+message Couplets {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   int32 coupletsCount = 4;
+   float burden = 5;
+}
+
+message Bigeminy {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   float burden = 4;
+}
+
+message Trigeminy {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   int32 coupletsCount = 4;
+   float burden = 5;
+}
+
+message Pacemaker {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   int32 coupletsCount = 4;
+   float burden = 5;
+}
+
+message OtherBeats {
+   int32 nbMorphologies = 1;
+   int32 count = 2;
+   int32 countPer24H = 3;
+   float burden = 4;
+}
+
+message Pause {
+   int32 count = 1;
+   float longestDuration = 2;
+}
+
+message AvBlock {
+   string code = 1;
+   float burden = 2;
+}
+
+message Afib {
+   float burden = 1;
+   float totalDuration = 2;
+   int32 count = 3;
+   float longestDuration = 4;
+   float longestDurationTimestamp = 5;
+   int32 minHr = 6;
+   int32 avgHr = 7;
+   int32 maxHr = 8;
+   float maxHrTimestamp = 9;
+}
+
+message Vt {
+   int32 count = 1;
+   int32 tripletsCount = 2;
+   int32 tripletsBurden = 3;
+   int32 totalBeats = 4;
+   float longestDuration = 5;
+   float longestDurationTimestamp = 6;
+   int32 longestDurationMaxHr = 7;
+   int32 longestBeats = 8;
+   float longestBeatsTimestamp = 9;
+   int32 longestBeatsMaxHr = 10;
+   int32 maxHr = 11;
+   float maxHrTimestamp = 12;
+   float maxHrDuration = 13;
+   int32 maxHrBeats = 14;
+}
+
+message OtherSvt {
+   int32 count = 1;
+   int32 totalBeats = 2;
+   float longestDuration = 3;
+   float longestDurationTimestamp = 4;
+   int32 longestDurationMaxHr = 5;
+   int32 longestBeats = 6;
+   float longestBeatsTimestamp = 7;
+   int32 longestBeatsMaxHr = 8;
+   int32 maxHr = 9;
+   float maxHrTimestamp = 10;
+   float maxHrDuration = 11;
+   int32 maxHrBeats = 12;
+   int32 shortRunsTotalBeats = 13; 
+}
+
+message Noise {
+   float burden = 1;
+}
+
+message PatientEvents {
+   int32 count = 1;
+}
+
+message Report {
+   string createdAt = 1;
+   string validatedAt = 2;
+   string user = 3;
+   string userId = 4;
+   string url = 5;
+}
+
+message getCardiologsSummaryRequest {
+   string caseNumber = 1;
+}
+
+message getCardiologsSummaryResponse {
+   string caseNumber = 1;
+   string inferVitalId = 2;
+   Metrics metrics = 3;
+}
+
+message Empty {}
+
+message getReportUrlFromCSRequest {
+   string inferVitalId = 1;
+}
+
+message getReportUrlFromCSResponse {
+   Report report = 1;
+}

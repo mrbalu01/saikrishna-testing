@@ -1,0 +1,134 @@
+syntax="proto3";
+
+service ECGStatusService {
+    rpc GetEcgDetailData(EcgDataRequest) returns (EcgDataListResponce){};
+    rpc updateEcgObject(updateEcgRequest) returns (ECGDataResponse){};
+    rpc GetByEcgId(GetByEcgIdRequest) returns (ECGDataResponse){};
+    rpc getLatestValidEcgObject(EcgDataRequest) returns (ECGDataResponse){};
+    rpc GetApprovedEcgReport(EcgDataRequest) returns (EcgDataListResponce){};
+    rpc GetApprovedEcgReportByCustomerId(reportRequest) returns (EcgDataListResponce){};
+    rpc getAllEcgObject(EcgDataPagedRequest) returns (EcgDataPagedResponce){};
+    rpc getById(GetByIdRequest) returns (ECGDataResponse){};
+    rpc updateEcgVitalInferById(UpdateEcgVitalInferRequest) returns (ECGDataResponse){};
+    rpc GetEcgReportByCaseNumbers(reportRequest) returns (EcgReportListResponce){};
+    rpc GetEcgReports(EcgReportRequest) returns (EcgReportResponce){};
+}
+
+message UpdateEcgVitalInferRequest {
+    string id = 1;
+    string ecgStatus = 2;
+    string debug = 3;
+}
+
+message EcgReportRequest {
+    string caseNumber = 1;
+    string page = 2;
+    string perPage = 3;
+}
+
+message EcgReportResponce {
+    repeated ECGDataResponse reports = 1;
+    int32 count = 2;
+    int32 pages = 3;
+}
+
+message reportRequest{
+    repeated string caseNumbers = 1;
+    string page = 2;
+    string perPage = 3;
+}
+
+message GetByEcgIdRequest {
+    string ecgId = 1;
+}
+
+message GetByIdRequest {
+    string id = 1;
+}
+
+message EcgDataRequest {
+    string patchId=1;
+    string caseNumber=2;
+    string type=3;
+    string code=4;
+}
+
+message updateEcgRequest {
+    string id=1;
+    string status=2;
+    repeated EcgValue ecgValue=3;
+}
+
+message EcgDataListResponce {
+    repeated ECGDataResponse data=1;
+}
+
+message EcgReportListResponce {
+    repeated EcgReportByCaseNumbers reports = 1;
+    int32 count = 2;
+    int32 pages = 3;
+}
+
+message EcgReportByCaseNumbers {
+    string caseNumber = 1;
+    repeated ECGDataResponse caseReports = 2;
+    string createdAt = 3;
+}
+
+message EcgDataPagedRequest {
+    string patchId = 1;
+    string caseNumber = 2;
+    string deviceName = 3;
+    string ecgStatus = 4;
+    string status = 5;
+    string page = 6;
+    string perPage = 7;
+}
+
+message EcgDataPagedResponce {
+    repeated ECGDataResponse vitals = 1;
+    int32 count = 2;
+    int32 pages = 3;
+}
+
+message ECGDataResponse{
+    string caseNumber=1;
+    string patchId=2;
+    Vital vital=3;
+    string status=4;
+    Analysis analysis=5;
+    repeated EcgValue ecgValue=6;
+    string ecgStatus=7;
+    Cardiologs cardiologs=8;
+    int32 value=9;
+    double timeStamp=10;
+    Evaluated evaluated=11;
+    string id=12;
+    string deviceName=13;
+}
+
+message EcgValue {
+   string group = 1;
+   repeated string ecgConditions = 2;
+}
+
+message Analysis{
+   int32 score = 1;
+   string group = 2;
+   string ecgCondition = 3;
+}
+
+message Vital{
+   string code = 1;
+   string name = 2;
+}
+
+message Cardiologs{
+   string ecgId = 1;
+   string reportUrl = 2;
+}
+
+message Evaluated{
+   double to = 1;
+   double from = 2;
+}

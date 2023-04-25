@@ -1,0 +1,22 @@
+syntax="proto3";
+
+service BatteryStatusService {
+   rpc getCurrentBatteryStatus(BatteryStatusRequest) returns (BatteryStatusResponse){}
+}
+
+message BatteryStatusRequest {
+   string customerCase = 1;
+}
+
+message BatteryStatusResponse {
+   repeated BatteryStatus devices = 1;
+}
+
+message BatteryStatus {
+   string customerCase = 1;
+   string name = 2;
+   string patchId = 3;
+   string valueType = 4;
+   string value = 5;
+   string percentage = 6;
+}

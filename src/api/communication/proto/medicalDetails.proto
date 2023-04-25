@@ -1,0 +1,34 @@
+syntax="proto3";
+
+service MedicalDetailsService {
+   rpc getMedicalDetails(MedicalDetailsRequest) returns (MedicalDetailsList){}
+   rpc getMedicalDetailsByText(MedicalDetailsByTextRequest) returns (MedicalDetails){}
+}
+
+message MedicalDetails {
+   string id=1;
+   string text=2;
+   string description=3;
+   string type =4;
+   bool isOptional=5;
+   repeated Options options=6;
+   string platformPartner=7;
+}
+
+message MedicalDetailsList {
+   repeated MedicalDetails MedicalDetailsList=1;
+}
+
+message Options {
+   string title=1;
+   string type=2;
+}
+
+message MedicalDetailsRequest{
+   string platformPartner=1;
+}
+
+message MedicalDetailsByTextRequest{
+   string platformPartner=1;
+   string text=2;
+}

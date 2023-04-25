@@ -1,0 +1,52 @@
+syntax="proto3";
+
+service NotificationService {
+    rpc getNotifications(getNotificationRequest) returns (getNotificationResponse){}
+    rpc getNotificationsForPeriod(NotificationsForPeriodRequest) returns (NotificationsForPeriodResponse){}
+}
+
+message getNotificationRequest {
+    string id = 1;
+    int32 page=2;
+    int32 perPage=3;
+    string type=4;
+}
+
+message NotificationsForPeriodRequest {
+    string id = 1;
+    string type = 2;
+    string fromTimeStamp = 3;
+    string toTimeStamp = 4;
+}
+
+message Notification{
+    string _id=1;
+    string type=2;
+    string customerCase=3;
+    string code=4;
+    string action=5;
+    string event=6;
+    string text=7;
+    string createdAt=8;
+    string updatedAt=9;
+    string timeStamp = 10;
+}
+
+message ID{
+    string month=1;
+    string day=2;
+    string year=3;
+}
+
+message notificationGroupRes{
+    ID _id=1;
+    repeated Notification notification=2;
+}
+
+message getNotificationResponse{
+   repeated notificationGroupRes notifications=1;
+}
+
+message NotificationsForPeriodResponse {
+   repeated Notification notifications = 1;
+}
